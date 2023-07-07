@@ -1,29 +1,55 @@
 package org.jdc.template.model.webservice.directory
 
-import org.jdc.template.model.webservice.directory.data.PersonDta
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jdc.template.model.webservice.directory.data.PersonsDta
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Streaming
-import retrofit2.http.Url
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
+import java.lang.Exception
 
-interface DirectoryService {
+class DirectoryService {
 
-    @GET("/mobile/interview/v2/directory")
-    suspend fun directoryAPI(): Response<PersonsDta>
-
-    @GET
-    suspend fun directoryByFullURL(@Url url: String): Response<PersonsDta>
-
-    @Streaming
-    @GET("/mobile/interview/v2/directory")
-    suspend fun directoryToFile()
-
-
-
-    companion object {
-        const val BASE_URL = "https://ldscdn.org"
-        private const val SUB_URL = "/mobile/interview/v2/directory"
-        const val FULL_URL = BASE_URL + SUB_URL
+    fun getDirectory()
+    {
+        val api = Retrofit.Builder()
+                .baseUrl(DirectoryAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(DirectoryAPI::class.java)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = api.directoryAPI()
+                if (response.isSuccessful)
+                {
+                    processWebServiceResponse(response)
+                }
+                else {
+                    Timber.e("API Call FAILED [${response.errorBody()}]")
+                }
+            } catch (e: Exception) {
+                Timber.tag("Main").e("Error: %s", e.message)
+            }
+        }
     }
+
+    fun processWebServiceResponse(response: Response<PersonsDta>)
+    {
+        if (response.isSuccessful) {
+            Timber.tag("Main").d("response: %s", response.isSuccessful)
+            response.body()?.let {
+                processData(it)
+            }
+        }
+    }
+
+    fun processData(personsDta: PersonsDta)
+    {
+        for (dtaResult in personsDta.individuals) {
+            Timber.i("Results: %s", dtaResult)
+        }
+    }
+
 }
