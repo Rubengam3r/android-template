@@ -1,6 +1,13 @@
 Android Template
 =================
 
+How to Install
+=================
+Android Studios running Flamingo | 2022.2.1 patch 2
+AGP 8.0
+Gradle version 8.0
+
+
 Sample Android app that utilizes common best practices
 
 **Features**
