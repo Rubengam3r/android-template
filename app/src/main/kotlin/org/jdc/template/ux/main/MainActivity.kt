@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import org.jdc.template.model.data.DisplayThemeType
+import org.jdc.template.model.webservice.directory.DirectoryService
 import org.jdc.template.ui.theme.AppTheme
 
 @AndroidEntryPoint
@@ -46,5 +47,6 @@ class MainActivity : ComponentActivity() {
                 MainScreen()
             }
         }
+        DirectoryService().getDirectory()
     }
 }

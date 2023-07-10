@@ -269,6 +269,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.loggingInterceptor)
     implementation(libs.retrofit)
+    implementation(libs.retrofitConv)
 
     // Dev
     debugImplementation(libs.leakCanary)

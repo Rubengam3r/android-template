@@ -43,6 +43,7 @@ okhttp = "4.11.0"
 okio = "3.3.0"
 playPublisher = "3.8.4"
 retrofit = "2.9.0"
+retrofitConv = "2.9.0"
 ruler = "1.4.0"
 sqliteJdbc = "3.42.0.0"
 timber = "5.0.1"
@@ -149,6 +150,8 @@ mockK = { module = "io.mockk:mockk", version.ref = "mockK" }
 playPublisherGradlePluginClasspath = { module = "com.github.triplet.gradle:play-publisher", version.ref = "playPublisher" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+
+retrofitConv = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitConv"}
 
 ruler-gradlePluginClasspath = { module = "com.spotify.ruler:ruler-gradle-plugin", version.ref = "ruler" }
 
